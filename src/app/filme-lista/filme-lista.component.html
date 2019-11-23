@@ -1,0 +1,80 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <div class="float-left">
+      <h4>Filmes</h4>
+    </div>
+
+    <div class="float-right">
+      <form [formGroup]="formSearch" (ngSubmit)="ngOnInit()">
+      <!--<button type="button" class="btn btn-primary" (click)="novoFilme">Novo Filme</button>-->
+      <!--<button type="button" class="btn btn-secondary" >Atualizar</button>-->
+      <div class="search-box">
+      <div class="row">
+        <div class="col-md-9">
+          <select class="form-control" type="text" id="idGenero">
+            <option selected>Filtrar por gênero...</option>
+            <option value="1">Ação</option>
+            <option value="4">Aventura</option>
+            <option value="6">Comédia</option>
+            <option value="2">Drama</option>
+            <option value="5">Ficção</option>
+            <option value="3">Romance</option>    
+            
+          </select>
+          
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="but btn-lg btn-success btn-sm" >Pesquisar</button>
+        </div>
+      </div>
+    </div>
+    </form>
+    </div>
+    
+    
+
+  </div>
+  <div class="card-body">
+    <div class="alert alert-danger" style="align-self: center;" *ngIf="showDeletedMessage">
+        Registro removido com sucesso.
+      </div>
+    <table class="table table-hover" *ngIf="(filmes | async) as film; else loading">
+      
+      <thead>
+        <tr>
+          <th>#</th>
+		  <th>Filme</th>
+		  <th>Diretor</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let filme of filmes | async">
+          <td>{{ filme.id }}</td>
+		  <td>{{ filme.titulo }}</td>
+		  <td>{{ filme.diretor }}</td>
+          <td>
+            <span class="float-right">
+				      <button (click)="updateFilme(filme.id)" class="btn btn-warning btn-sm">Editar</button>
+              <button  (click)="apagaFilme(filme.id)" class="btn btn-danger btn-sm" style="margin-left: 08px">Excluir</button>
+              <button (click)="filmeConsulta(filme.id)" class="btn btn-info btn-sm"  style="margin-left: 08px">Consultar</button>             
+            </span>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+    <ng-template #loading>
+      <span>Carregando Filmes...</span>
+    </ng-template>
+
+    <script>
+         $('input#txt_consulta').quicksearch('table#tabela tbody tr');
+        </script>
+
+    
+  </div>
+</div>
+
+

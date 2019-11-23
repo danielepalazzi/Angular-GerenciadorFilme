@@ -1,0 +1,90 @@
+<h3>{{nomePagina}}</h3>
+<div style="width: 400px;">
+  <form class="needs-validation" [formGroup]="form" (ngSubmit)="onSubmit()"  novalidate>
+    <div class="form-group">
+      
+      <div>
+        <label for="titulo">Título*: </label>
+        <input 
+          type="text" required [readOnly]="consulta"
+          [(ngModel)]="filme.titulo"  
+          class="form-control" 
+          id="titulo"  
+          formControlName="titulo" 
+          />
+          
+      </div>
+      <div *ngIf="form.get('titulo').invalid && (form.get('titulo').dirty ||
+        form.get('titulo').touched)" class="alert alert-danger"> 
+          Título é obrigatório! 
+      </div>
+
+      <div>
+        <label for="diretor">Diretor*: </label>
+        <input type="text" [readOnly]="consulta"
+          [(ngModel)]="filme.diretor" 
+          class="form-control" required 
+          id="diretor" 
+          formControlName="diretor"  
+          />
+          <div class="alert alert-danger" *ngIf="form.get('diretor').invalid &&
+          (form.get('diretor').dirty || form.get('diretor').touched)">
+          <div *ngIf="form.get('diretor').hasError('required')"> 
+             Diretor é obrigatório! 
+          </div>
+          <div *ngIf="form.get('diretor').hasError('minlength')"> 
+            O tamanho máximo da idade é de 2 números 
+          </div>
+        </div>
+          
+      </div>
+
+      <div>
+        <label for="genero">Gênero*: </label>
+          <select class="form-control" required type="text" [disabled]="consulta" [(ngModel)]="filme.genero" class="form-control" formControlName="genero" id="genero">
+            <option selected>Escolha...</option>
+            <option value="1">Ação</option>
+            <option value="4">Aventura</option>
+            <option value="6">Comédia</option>
+            <option value="2">Drama</option>
+            <option value="5">Ficção</option>
+            <option value="3">Romance</option>    
+            <!-- 
+              <option *ngFor="let genero of generos" value= {{genero.id}}>
+                {{genero.nomeGenero}}
+              </option>-->
+            <!--ngModel={{filme.diretor.nomeGenero}} -->
+          </select>
+          <div *ngIf="form.get('diretor').invalid && (form.get('diretor').dirty ||
+            form.get('diretor').touched)" class="alert alert-danger"> 
+              Gênero é obrigatório!
+          </div>
+      </div>
+
+      <div>
+        <label for="sinopse">Sinopse: </label>
+        <textarea type="text" [readOnly]="consulta" [(ngModel)]="filme.sinopse" class="form-control" formControlName="sinopse" id="sinopse"></textarea>
+      </div>
+      <div *ngIf="form.get('sinopse').invalid"> 
+        Sinopse possui tamanho máximo de 500 caracteres. 
+      </div>
+
+      <div>
+        <label for="ano">Ano: </label>
+        <input type="text" [readOnly]="consulta" [(ngModel)]="filme.ano" class="form-control" formControlName="ano" id="ano">
+      </div>
+      <div *ngIf="form.get('ano').hasError('pattern')"> 
+        O ano deve ser no formato YYYY. 
+      </div>
+
+      <br>
+      <div> 
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid || consulta"  *ngIf="!showButton" style="margin-right: 10px;">Salvar</button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+      </div>
+   
+    </div>
+  </form>
+
+
+</div>
